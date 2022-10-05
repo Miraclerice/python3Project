@@ -314,60 +314,213 @@ import functools
 
 
 # ----------------遍历操作,恢复迭代器初始值-------------------------
-class Person:
-    def __init__(self):
-        self.res = 1
+# class Person:
+#     def __init__(self):
+#         self.res = 1
+#
+#     # 方式一
+#     # def __getitem__(self, item):
+#     #     self.res += 1
+#     #     if self.res >= 6:
+#     #         raise StopIteration("停止遍历")
+#     #     return self.res
+#
+#     # 方式二
+#     def __iter__(self):
+#         # 每次迭代重新赋值，使得迭代器重用
+#         self.res = 1
+#         return self
+#
+#     # def __next__(self):
+#     #     self.res += 1
+#     #     if self.res >= 6:
+#     #         raise StopIteration("停止遍历")
+#     #     return self.res
+#
+#     def __call__(self, *args, **kwargs):
+#         self.res += 1
+#         if self.res >= 6:
+#             raise StopIteration("停止遍历")
+#         return self.res
+#
+#
+# p = Person()
+# # 前提是实现了__getitem__方法，才可以使用iter()
+# # pt = iter(p.__next__, 4)
+# # 实例可以被调用，实现call方法
+# pt = iter(p, 4)
+# print(pt)
+# print(p is pt)
+# for i in pt:
+#     print(i)
+#
+# # for i in p:
+# #     print(i)
+#
+# # 可迭代对象或迭代器肯定可以for in，但是可以for in 不一定是可迭代对象或迭代器
+# from collections.abc import *
+#
+# # 实例成为迭代器条件：写__iter__方法与__next__方法
+# # 判断是不是迭代器对象
+# print(isinstance(p, Iterator))
+# # 判断是不是可迭代对象
+# print(isinstance(p, Iterable))
+# print(isinstance(pt, Iterator))
+# print(isinstance(pt, Iterable))
 
-    # 方式一
-    # def __getitem__(self, item):
-    #     self.res += 1
-    #     if self.res >= 6:
-    #         raise StopIteration("停止遍历")
-    #     return self.res
 
-    # 方式二
-    def __iter__(self):
-        # 每次迭代重新赋值，使得迭代器重用
-        self.res = 1
-        return self
+# ----------------描述器定义方式一-------------------------
+# class Person:
+#     def __init__(self):
+#         self.__age = 18
+#
+#     @property
+#     def age(self):
+#         return self.__age
+#
+#     @age.setter
+#     def age(self, value):
+#         if value < 0:
+#             value = 0
+#         self.__age = value
+#
+#     @age.deleter
+#     def age(self):
+#         del self.__age
+#
+#     num = "jj"
+#
+#
+# person = Person()
+# person.age = 10
+# print(person.age)
+# del person.age
+# # print(person.age)
+# help(person)
 
-    # def __next__(self):
-    #     self.res += 1
-    #     if self.res >= 6:
-    #         raise StopIteration("停止遍历")
-    #     return self.res
+
+# ----------------描述器定义方式二-------------------------
+
+# class Age(object):
+#     def __get__(self, instance, owner):
+#         print("get")
+#
+#     def __set__(self, instance, value):
+#         print("set")
+#
+#     def __delete__(self, instance):
+#         print("delete")
+#
+#
+# class Person(object):
+#     age = Age()
+#     # def __getattribute__(self, item):
+#     #     print("kkkk")
+#
+# # 只要新式类才会转换操作描述器
+# person = Person()
+# person.age = 10
+# print(person.age)
+# del person.age
+# print(person.age)
+# help(person)
+# 只打印get。不会转换set和delete。所以一般通过实例操作描述器
+# print(Person.age)
+# Person.age = 20
+# del Person.age
+
+
+# 如果实现了__get__, 判定为"非资料描述器"
+# 如果实现了__get__、 __set__，判定为"资料描述器"
+# 资料描述器 > 实例字典 > 非资料描述器
+# ----------------描述器优先级-------------------------
+
+# class Age(object):
+#     def __get__(self, instance, owner):
+#         print("get")
+#
+#     # def __set__(self, instance, value):
+#     #     print("set")
+#     #
+#     # def __delete__(self, instance):
+#     #     print("delete")
+#
+#
+# class Person(object):
+#     age = Age()
+#
+#     def __init__(self):
+#         self.age = 100
+#
+#
+# # 只要新式类才会转换操作描述器
+# person = Person()
+# person.age = 10
+# print(person.age)
+# # del person.age
+# print(person.__dict__)
+
+
+# ----------------描述器值存在问题-------------------------
+
+# class Age(object):
+#     def __get__(self, instance, owner):
+#         print("get")
+#         return instance.v
+#
+#     def __set__(self, instance, value):
+#         print("set", self, instance, value)
+#         instance.v = value
+#
+#     def __delete__(self, instance):
+#         print("delete")
+#         del instance.v
+#
+#
+# class Person(object):
+#     age = Age()
+#
+#
+# # 多个实例的age对象相同，通过instance来修改值
+# person = Person()
+# person.age = 10
+# print(person.age)
+# # del person.age
+# person2 = Person()
+# person2.age = 100
+# print(person2.age)
+# print(person.age)
+
+
+# ----------------使用类实现装饰器-------------------------
+# def check(func):
+#     def inner():
+#         print("登录验证")
+#         func()
+#
+#     return inner
+
+class Check:
+    def __init__(self, func):
+        self.func = func
 
     def __call__(self, *args, **kwargs):
-        self.res += 1
-        if self.res >= 6:
-            raise StopIteration("停止遍历")
-        return self.res
+        print("登录验证")
+        self.func()
 
 
-p = Person()
-# 前提是实现了__getitem__方法，才可以使用iter()
-# pt = iter(p.__next__, 4)
-# 实例可以被调用，实现call方法
-pt = iter(p, 4)
-print(pt)
-print(p is pt)
-for i in pt:
-    print(i)
+# 语法糖装饰器 函数装饰器：@check   类装饰器：@Check
+# @check
+# @Check
+def publish_novels():
+    print("发说说")
 
-# for i in p:
-#     print(i)
 
-# 可迭代对象或迭代器肯定可以for in，但是可以for in 不一定是可迭代对象或迭代器
-from collections.abc import *
-
-# 实例成为迭代器条件：写__iter__方法与__next__方法
-# 判断是不是迭代器对象
-print(isinstance(p, Iterator))
-# 判断是不是可迭代对象
-print(isinstance(p, Iterable))
-print(isinstance(pt, Iterator))
-print(isinstance(pt, Iterable))
-
+# 函数装饰器
+# publish_novels = check(publish_novels)
+# 类装饰器
+publish_novels = Check(publish_novels)
+publish_novels()
 '''
 内置特殊方法
     1.生命周期方法[链接过去]
