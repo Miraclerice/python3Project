@@ -1,0 +1,17 @@
+../file/avi
+	a.avi
+	b.avi
+
+../file/doc
+	a.doc
+	b.doc
+
+../file/jpg
+	a.jpg
+	b.jpg
+
+../file/txt
+	poem.txt
+	poem_copy.txt
+
+
