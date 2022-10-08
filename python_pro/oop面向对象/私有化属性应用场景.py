@@ -22,17 +22,17 @@ class Person:
 
 
 p1 = Person()
-# p1.__age = -10
+# pack1.__age = -10
 p1.setAge("aa")
-# print(p1._Person__age)
+# print(pack1._Person__age)
 print(p1.getAge())
 
 p2 = Person()
 
 p3 = Person()
 
-# print(p1.__dict__)
-# print(p1.__age)
+# print(pack1.__dict__)
+# print(pack1.__age)
 # print(p2.__age)
 # print(p3.__age)
 

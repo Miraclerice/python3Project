@@ -70,8 +70,8 @@ print(set5, type(set5))
 
 #
 # s.pop(element) 随机删除并返回集合中的某个元素，集合为空，报错
-# p1 = s.pop()
-# print(p1)
+# pack1 = s.pop()
+# print(pack1)
 # s.pop()
 # s.pop()
 # s.pop()

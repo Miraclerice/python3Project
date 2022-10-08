@@ -18,10 +18,10 @@
 #         return f"这个人的身高是{self.height}, 年龄是{self.weight}"
 #
 #
-# p1 = Person(40, 152)
-# print(p1.height)
-# print(p1.weight)
-# print(p1)
+# pack1 = Person(40, 152)
+# print(pack1.height)
+# print(pack1.weight)
+# print(pack1)
 #
 #
 # p2 = Person(70, 190)
@@ -29,7 +29,7 @@
 # print(p2.weight)
 # print(p2)
 #
-# s = str(p1)
+# s = str(pack1)
 # print(s, type(s))
 
 
@@ -51,17 +51,17 @@
 #     def __repr__(self):
 #         return "vvv"
 #
-# p1 = Person(40, 152)
-# print(p1)
+# pack1 = Person(40, 152)
+# print(pack1)
 #
 #
 # p2 = Person(70, 190)
 # print(p2)
 #
-# # s = str(p1)
+# # s = str(pack1)
 # # print(s, type(s))
 #
-# print(repr(p1))
+# print(repr(pack1))
 
 
 # import datetime
@@ -228,10 +228,10 @@ import functools
 #     #     print("__le__")
 #
 #
-# p1 = Person(10, 160)
+# pack1 = Person(10, 160)
 # p2 = Person(19, 170)
-# print(p1 < p2)
-# print(p1 > p2)
+# print(pack1 < p2)
+# print(pack1 > p2)
 
 # ----------------比较操作_补充-------------------------
 # import functools
@@ -249,9 +249,9 @@ import functools
 #         return False
 #
 #
-# p1 = Person()
+# pack1 = Person()
 # p2 = Person()
-# print(p1 <= p2)
+# print(pack1 <= p2)
 # # print(Person.__dict__)
 
 
@@ -264,8 +264,8 @@ import functools
 #         return self.age >= 18
 #
 #
-# p1 = Person()
-# if p1:
+# pack1 = Person()
+# if pack1:
 #     print("实例为真")
 
 # ----------------遍历操作-------------------------

@@ -33,11 +33,11 @@
 #     pass
 
 
-# p1 = Person()
+# pack1 = Person()
 # p2 = Person()
 #
 # p2.age = 18
-# print(p1.age)
+# print(pack1.age)
 
 # class Person:
 #     num = 666
