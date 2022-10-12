@@ -416,7 +416,6 @@ class Calc:
     def result(self):
         return self.__res
 
-
 # calc = Calc(100)
 # calc.add_method(56).sub_method(30).mut_method(3).div_method(120).show_value().clear().sub_method(200).show_value()
 # print(calc.result)
